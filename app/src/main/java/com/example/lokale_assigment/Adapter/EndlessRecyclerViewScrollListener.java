@@ -1,7 +1,5 @@
 package com.example.lokale_assigment.Adapter;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

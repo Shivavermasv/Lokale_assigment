@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface JobApiService {
 
-    @GET("common/jobs")  // Replace "jobs" with the actual endpoint
+    @GET("common/jobs")
     Call<JobResponse> getJobs(@Query("page") int page);
 }

@@ -1,11 +1,8 @@
 package com.example.lokale_assigment.Adapter;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import static com.example.lokale_assigment.Job_item_detail.jobDetailStartActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lokale_assigment.Databse.AppDatabase;
-import com.example.lokale_assigment.Job_item_detail;
 import com.example.lokale_assigment.R;
 import com.example.lokale_assigment.dao.JobsDao;
 import com.example.lokale_assigment.model.Job;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +38,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         AppDatabase db = AppDatabase.getDatabase(context);
         jobDao = db.jobDao();
     }
-
-    public JobAdapter(Context context, int item) {
-        jobList = new ArrayList<> ();
-        this.context = context;
-        this.item = item;
-
-        // Initialize the database and DAO
-    }
-
     @NonNull
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,7 +49,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
         Job job = jobList.get(position);
         holder.titleTextView.setText(job.getTitle());
-        //holder.locationTextView.setText(job.getLocation());
+        holder.locationTextView.setText(job.getPrimaryDetails ().getPlace ());
 
         // Set click listener for the bookmark button
         if(item == R.layout.job_item_job){
@@ -84,7 +70,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
                     Log.d("api", e.toString ());
                     Toast.makeText(context, "Job Already Bookmarked!", Toast.LENGTH_SHORT).show();
                 }
-                // Optionally, show a toast message for confirmation
             });
         }
     }

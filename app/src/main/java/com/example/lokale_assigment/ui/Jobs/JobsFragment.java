@@ -46,35 +46,28 @@ public class JobsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         jobsViewModel = new ViewModelProvider(this).get(JobsViewModel.class);
-
-        // Hide the action bar
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         }
 
         binding = JobsFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-        // Initialize RecyclerView and Adapter
         jobsRecyclerView = view.findViewById(R.id.jobs_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         jobsRecyclerView.setLayoutManager(layoutManager);
 
-        // Initialize adapter and set it
         jobAdapter = new JobAdapter(new ArrayList<>(), getContext(), R.layout.job_item_job);
         jobsRecyclerView.setAdapter(jobAdapter);
 
-        // Observe job list data from ViewModel
         jobsViewModel.getJobList().observe(getViewLifecycleOwner(), jobs -> {
             if (jobs != null) {
                 jobAdapter.addJobs(jobs);
             }
         });
 
-        // Fetch initial data
         fetchJobsFromApi(currentPage);
 
-        // Set scroll listener for infinite scrolling
+
         jobsRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void loadMoreItems() {
@@ -103,11 +96,9 @@ public class JobsFragment extends Fragment {
     }
 
     private void fetchJobsFromApi(int currentPage) {
-        // Initialize Retrofit with your base URL
         Retrofit retrofit = RetrofitClient.getClient("https://testapi.getlokalapp.com/");
         JobApiService jobApiService = retrofit.create(JobApiService.class);
 
-        // Call the API to get jobs
         Call<JobResponse> call = jobApiService.getJobs(currentPage);
         call.enqueue(new Callback<JobResponse>() {
             @Override
