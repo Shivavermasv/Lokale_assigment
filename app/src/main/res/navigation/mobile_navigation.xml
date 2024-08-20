@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/Job">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.lokale_assigment.ui.home.JobsFragment"
+        android:id="@+id/Job"
+        android:name="com.example.lokale_assigment.ui.Jobs.JobsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/bookmark_fragment" >
+        tools:layout="@layout/jobs_fragment" >
         <action
-            android:id="@+id/action_navigation_home_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
+            android:id="@+id/action_Job_to_BookMark"
+            app:destination="@id/BookMark" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.lokale_assigment.ui.dashboard.BookmarkFragment"
+        android:id="@+id/BookMark"
+        android:name="com.example.lokale_assigment.ui.BookMark.BookmarkFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/jobs_fragment" />
+        tools:layout="@layout/bookmark_fragment" >
+        <action
+            android:id="@+id/action_BookMark_to_Job"
+            app:destination="@id/Job" />
+    </fragment>
 </navigation>

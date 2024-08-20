@@ -1,4 +1,4 @@
-package com.example.lokale_assigment.ui.dashboard;
+package com.example.lokale_assigment.ui.BookMark;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

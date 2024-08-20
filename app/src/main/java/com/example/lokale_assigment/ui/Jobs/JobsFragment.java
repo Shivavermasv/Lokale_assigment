@@ -1,4 +1,4 @@
-package com.example.lokale_assigment.ui.home;
+package com.example.lokale_assigment.ui.Jobs;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -41,10 +41,11 @@ public class JobsFragment extends Fragment {
     private boolean isLastPage = false;
     private int currentPage = 1;
     private final int pageSize = 100;  // Assuming the page size
+    private JobsViewModel jobsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        JobsViewModel homeViewModel = new ViewModelProvider(this).get(JobsViewModel.class);
+        jobsViewModel = new ViewModelProvider(this).get(JobsViewModel.class);
 
         // Hide the action bar
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
@@ -62,6 +63,13 @@ public class JobsFragment extends Fragment {
         // Initialize adapter and set it
         jobAdapter = new JobAdapter(new ArrayList<>(), getContext(), R.layout.job_item_job);
         jobsRecyclerView.setAdapter(jobAdapter);
+
+        // Observe job list data from ViewModel
+        jobsViewModel.getJobList().observe(getViewLifecycleOwner(), jobs -> {
+            if (jobs != null) {
+                jobAdapter.addJobs(jobs);
+            }
+        });
 
         // Fetch initial data
         fetchJobsFromApi(currentPage);
@@ -104,15 +112,12 @@ public class JobsFragment extends Fragment {
         call.enqueue(new Callback<JobResponse>() {
             @Override
             public void onResponse(@NonNull Call<JobResponse> call, @NonNull Response<JobResponse> response) {
-//                Log.d("api", response.message());
                 if (response.isSuccessful() && response.body() != null) {
-                    // Add the new jobs to the adapter
+                    // Add the new jobs to the ViewModel
                     List<Job> newJobs = response.body().getResults();
-                    jobAdapter.addJobs(newJobs);
+                    jobsViewModel.setJobList(newJobs);
 
-                   isLastPage = false;
-
-                    // Reset loading flag
+                    isLastPage = false;
                 } else {
                     Toast.makeText(getContext(), "Failed to load more data!", Toast.LENGTH_SHORT).show();
                 }

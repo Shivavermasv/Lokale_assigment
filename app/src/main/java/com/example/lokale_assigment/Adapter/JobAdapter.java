@@ -6,6 +6,7 @@ import static com.example.lokale_assigment.Job_item_detail.jobDetailStartActivit
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         }
         this.context = context;
         this.item = item;
+        AppDatabase db = AppDatabase.getDatabase(context);
+        jobDao = db.jobDao();
     }
 
     public JobAdapter(Context context, int item) {
@@ -47,8 +50,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         this.item = item;
 
         // Initialize the database and DAO
-        AppDatabase db = AppDatabase.getDatabase(context);
-        jobDao = db.jobDao();
     }
 
     @NonNull
@@ -80,6 +81,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
                 }
                 catch (Exception e){
                     e.printStackTrace();
+                    Log.d("api", e.toString ());
                     Toast.makeText(context, "Job Already Bookmarked!", Toast.LENGTH_SHORT).show();
                 }
                 // Optionally, show a toast message for confirmation
