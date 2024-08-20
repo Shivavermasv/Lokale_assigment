@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lokale_assigment</string>
+    <string name="title_home">Jobs</string>
+    <string name="title_dashboard">BookMark</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="available_jobs">Available Jobs</string>
+    <string name="no_bookmarks_yet">No bookmarks yet</string>
+    <string name="bookmarked_jobs">Bookmarked Jobs</string>
+    <string name="it">IT</string>
+    <string name="finance">Finance</string>
+    <string name="healthcare">Healthcare</string>
+    <string name="bookmarked">Bookmarked</string>
+</resources>
