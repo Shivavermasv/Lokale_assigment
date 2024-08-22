@@ -11,15 +11,15 @@ public class Converters {
     @TypeConverter
     public static String fromPrimaryDetails(Job.PrimaryDetails primaryDetails) {
         if (primaryDetails == null) {
-            return null;
+            return "NOT DEFINED !!";
         }
         return gson.toJson(primaryDetails);
     }
 
     @TypeConverter
     public static Job.PrimaryDetails toPrimaryDetails(String data) {
-        if (data == null) {
-            return null;
+        if (data == null || data.equals("NOT DEFINED !!")) {
+            return new Job.PrimaryDetails("UNKNOWN PLACE", "UNKNOWN SALARY");
         }
         Type type = new TypeToken<Job.PrimaryDetails>() {}.getType();
         return gson.fromJson(data, type);
@@ -28,15 +28,15 @@ public class Converters {
     @TypeConverter
     public static String fromContactPreference(Job.ContactPreference contactPreference) {
         if (contactPreference == null) {
-            return null;
+            return "NOT DEFINED !!";
         }
         return gson.toJson(contactPreference);
     }
 
     @TypeConverter
     public static Job.ContactPreference toContactPreference(String data) {
-        if (data == null) {
-            return null;
+        if (data == null || data.equals("NOT DEFINED !!")) {
+            return new Job.ContactPreference("00:00", "00:00", "UNKNOWN");
         }
         Type type = new TypeToken<Job.ContactPreference>() {}.getType();
         return gson.fromJson(data, type);

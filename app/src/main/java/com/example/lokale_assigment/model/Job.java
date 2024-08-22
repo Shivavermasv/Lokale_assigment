@@ -1,24 +1,26 @@
 package com.example.lokale_assigment.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "jobs", indices = {@Index(value = {"title"}, unique = true)})
-public class Job implements Parcelable {
-    public Job(){
+import java.io.Serializable;
 
+@Entity(tableName = "jobs")
+public class Job implements Serializable {
+    public Job() {
+        title = "TITLE";
     }
-    @PrimaryKey(autoGenerate = true)
-    private int id;
 
+    @PrimaryKey
+    @NonNull
     @SerializedName("title")
     private String title;
+
+
 
     @SerializedName("primary_details")
     private PrimaryDetails primaryDetails;
@@ -26,46 +28,6 @@ public class Job implements Parcelable {
     @SerializedName("contact_preference")
     private ContactPreference contactPreference;
 
-    protected Job(Parcel in) {
-        id = in.readInt();
-        title = in.readString();
-        primaryDetails = in.readParcelable(PrimaryDetails.class.getClassLoader());
-        contactPreference = in.readParcelable(ContactPreference.class.getClassLoader());
-    }
-
-    public static final Creator<Job> CREATOR = new Creator<Job>() {
-        @Override
-        public Job createFromParcel(Parcel in) {
-            return new Job(in);
-        }
-
-        @Override
-        public Job[] newArray(int size) {
-            return new Job[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
-        dest.writeParcelable(primaryDetails, flags);
-        dest.writeParcelable(contactPreference, flags);
-    }
-
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -91,39 +53,16 @@ public class Job implements Parcelable {
         this.contactPreference = contactPreference;
     }
 
-    public static class PrimaryDetails implements Parcelable {
+    public static class PrimaryDetails implements Serializable {
         @SerializedName("Place")
         private String place;
 
         @SerializedName("Salary")
         private String salary;
 
-        protected PrimaryDetails(Parcel in) {
-            place = in.readString();
-            salary = in.readString();
-        }
-
-        public static final Creator<PrimaryDetails> CREATOR = new Creator<PrimaryDetails>() {
-            @Override
-            public PrimaryDetails createFromParcel(Parcel in) {
-                return new PrimaryDetails(in);
-            }
-
-            @Override
-            public PrimaryDetails[] newArray(int size) {
-                return new PrimaryDetails[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(place);
-            dest.writeString(salary);
+        public PrimaryDetails(String unknownPlace, String unknownSalary) {
+            this.place = unknownPlace;
+            this.salary = unknownSalary;
         }
 
         // Getters and Setters
@@ -144,7 +83,7 @@ public class Job implements Parcelable {
         }
     }
 
-    public static class ContactPreference implements Parcelable {
+    public static class ContactPreference implements Serializable {
         @SerializedName("preferred_call_start_time")
         private String preferredCallStartTime;
 
@@ -154,34 +93,10 @@ public class Job implements Parcelable {
         @SerializedName("whatsapp_no")
         private String whatsappNo;
 
-        protected ContactPreference(Parcel in) {
-            preferredCallStartTime = in.readString();
-            preferredCallEndTime = in.readString();
-            whatsappNo = in.readString();
-        }
-
-        public static final Creator<ContactPreference> CREATOR = new Creator<ContactPreference>() {
-            @Override
-            public ContactPreference createFromParcel(Parcel in) {
-                return new ContactPreference(in);
-            }
-
-            @Override
-            public ContactPreference[] newArray(int size) {
-                return new ContactPreference[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(preferredCallStartTime);
-            dest.writeString(preferredCallEndTime);
-            dest.writeString(whatsappNo);
+        public ContactPreference(String time, String time1, String unknown) {
+            this.preferredCallStartTime = time;
+            this.preferredCallEndTime = time1;
+            this.whatsappNo = unknown;
         }
 
         // Getters and Setters

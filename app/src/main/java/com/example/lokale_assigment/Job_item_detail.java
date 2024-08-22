@@ -41,7 +41,7 @@ public class Job_item_detail extends AppCompatActivity {
         // Retrieve Job object from Intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("job")) {
-            Job job = intent.getParcelableExtra("job");
+            Job job = (Job) intent.getSerializableExtra ("job");
             if (job != null) {
                 populateJobDetails(job);
             }

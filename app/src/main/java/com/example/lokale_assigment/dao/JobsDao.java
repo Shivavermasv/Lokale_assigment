@@ -20,4 +20,7 @@ public interface JobsDao {
 
     @Query("SELECT * FROM jobs")
     List<Job> getAllJobs();
+
+    @Query("SELECT * FROM jobs WHERE title = :title LIMIT 1")
+    Job getJobByTitle(String title);
 }
