@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,17 +49,42 @@ public class Job_item_detail extends AppCompatActivity {
     }
 
     private void populateJobDetails(Job job) {
-        titleView.setText(job.getTitle());
-        placeView.setText("Place: " + job.getPrimaryDetails().getPlace());
-        salaryView.setText("Salary: " + job.getPrimaryDetails().getSalary());
-        callStartTimeView.setText("Preferred Call Start Time: " + job.getContactPreference().getPreferredCallStartTime());
-        callEndTimeView.setText("Preferred Call End Time: " + job.getContactPreference().getPreferredCallEndTime());
-        whatsappNoView.setText("WhatsApp No: " + job.getContactPreference().getWhatsappNo());
+        titleView.setText(job.getTitle() != null ? job.getTitle() : "");
+
+        if (job.getPrimaryDetails() != null) {
+            placeView.setText(job.getPrimaryDetails().getPlace() != null ? "Place: " + job.getPrimaryDetails().getPlace() : "");
+            salaryView.setText(job.getPrimaryDetails().getSalary() != null ? "Salary: " + job.getPrimaryDetails().getSalary() : "");
+        } else {
+            placeView.setText("");
+            salaryView.setText("");
+        }
+
+        if (job.getContactPreference() != null) {
+            callStartTimeView.setText(job.getContactPreference().getPreferredCallStartTime() != null ?
+                    "Preferred Call Start Time: " + job.getContactPreference().getPreferredCallStartTime() : "");
+
+            callEndTimeView.setText(job.getContactPreference().getPreferredCallEndTime() != null ?
+                    "Preferred Call End Time: " + job.getContactPreference().getPreferredCallEndTime() : "");
+
+            whatsappNoView.setText(job.getContactPreference().getWhatsappNo() != null ?
+                    "WhatsApp No: " + job.getContactPreference().getWhatsappNo() : "");
+        } else {
+            callStartTimeView.setText("");
+            callEndTimeView.setText("");
+            whatsappNoView.setText("");
+        }
     }
+
 
     public static void jobDetailStartActivity(Job job, Context context) {
         Intent intent = new Intent(context, Job_item_detail.class);
         intent.putExtra("job", job);
-        context.startActivity(intent);
+        try{
+            context.startActivity(intent);
+        }
+        catch (Exception e){
+            e.printStackTrace ();
+            Toast.makeText ( context, "JOB NOT FOUND !!", Toast.LENGTH_SHORT ).show ();
+        }
     }
 }

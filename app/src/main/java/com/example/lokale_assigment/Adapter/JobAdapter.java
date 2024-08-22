@@ -49,13 +49,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
         Job job = jobList.get(position);
         holder.titleTextView.setText(job.getTitle());
-        holder.locationTextView.setText(job.getPrimaryDetails ().getPlace ());
+        //holder.locationTextView.setText(job.getPrimaryDetails ().getPlace ());
 
+        holder.itemView.setOnClickListener ( view -> {
+            jobDetailStartActivity(jobList.get ( position ), context);
+        } );
         // Set click listener for the bookmark button
         if(item == R.layout.job_item_job){
-            holder.itemView.setOnClickListener ( view -> {
-                jobDetailStartActivity(jobList.get ( position ), context);
-            } );
 
             holder.bookmarkButton.setOnClickListener(v -> {
                 // Add the job to the database
